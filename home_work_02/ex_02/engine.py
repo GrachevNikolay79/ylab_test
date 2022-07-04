@@ -30,7 +30,9 @@ WinType = namedtuple('WinTypes', ['Win_X', "Win_O", "Draw", "Continue"])('X', 'O
 
 
 class Engine(BasicEngine):
-
+    # класс создавался с расчетом, что тут будет "думатель", воможно сML,
+    # но рандом с одним правом на ошибку за ход уже неплохо справляется,
+    # а на ML мозгов пока не хватило
     def __init__(self, x_size: int, y_size: int, win_line=5):
         self.Map = Map(x_size, y_size)
         self.x_size = x_size
