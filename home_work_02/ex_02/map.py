@@ -1,3 +1,4 @@
+import random as rd
 from collections import namedtuple
 
 
@@ -179,3 +180,17 @@ class Map:
         x2 += 1
 
         return count, x1, y1, x2, y2
+
+    def get_random_empty_cell(self) -> (int, int):
+        empty_list = tuple(i for i, v in enumerate(self.map) if v == CellState.EMPTY)
+        list_len = len(empty_list)
+        if list_len == 0:
+            return None, None
+        elif list_len == 1:
+            idx = empty_list[0]
+        else:
+            n = rd.randint(0, list_len - 1)
+            idx = empty_list[n]
+        x = idx // self.x_size
+        y = idx % self.x_size
+        return x, y

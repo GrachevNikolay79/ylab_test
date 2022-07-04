@@ -11,11 +11,14 @@ class BasicEngine:
     def turn(self, x, y) -> CellState:
         pass
 
-    def check_win(self, x: int, y: int) -> (bool, str, tuple):
+    def check_win(self, x: int, y: int) -> (str, str, tuple):
         """
         :return:
-        win: bool
-        paler_name: str
+        win_type: str ('X', 'O', 'D', 'C')
+
+        player_name: str
+        
+        line: tuple(len, x1, y1, x2, y2)
         """
         pass
 
@@ -58,7 +61,7 @@ class Engine(BasicEngine):
             self.activ_player = "user"
             self.activ_symbol = CellState.X
 
-    def check_win(self, x: int, y: int) -> (bool, str, tuple):
+    def check_win(self, x: int, y: int) -> (str, str, tuple):
         if not self.Map.check_for_empty_cells():
             return WinType.Draw, None, None
         wt = WinType.Continue
@@ -77,21 +80,10 @@ class Engine(BasicEngine):
         return wt, None, None
 
     def think(self, func_cell_on_click=None) -> (int, int):
-        if self.Map.check_for_empty_cells():
-            x = rd.randint(0, self.x_size)
-            y = rd.randint(0, self.y_size)
-
-            if x < 0 or x > self.x_size:
-                print("X out of range", x)
-            if y < 0 or y > self.y_size:
-                print("Y out of range", y)
-
-            while not self.Map.is_cell_empty(x, y):
-                x = rd.randint(0, self.x_size)
-                y = rd.randint(0, self.y_size)
-
+        x, y = self.Map.get_random_empty_cell()
+        if x is not None:
             if func_cell_on_click is None:
                 self.turn(x, y)
             else:
                 func_cell_on_click(x, y, False)
-            return x, y
+        return x, y
