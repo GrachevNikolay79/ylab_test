@@ -12,8 +12,10 @@ class GameWindow:
         self.buttons = []
         self.__create_widgets()
         self.game_over = False
+        self.active = False
 
     def run(self):
+        self.active = False
         self.root.mainloop()
         pass
 
@@ -39,7 +41,11 @@ class GameWindow:
         gf.pack()
 
     def cell_on_click(self, x, y, man=False):
-        res = self.engine.turn(x, y)
+        if man:
+            res = self.engine.turn(x, y, CellState.X)
+        else:
+            res = self.engine.turn(x, y, CellState.O)
+
         if res is not None:
             btn = self.buttons[x + y * self.x_size]
             if res == CellState.X:
@@ -54,9 +60,9 @@ class GameWindow:
             elif win == WinType.Continue:
                 if man:
                     self.engine.think(self.cell_on_click)
-                return
             else:
                 self.__win(user, line)
+
 
     def wrap_cell_on_click(self, x: int, y: int):
         def func():

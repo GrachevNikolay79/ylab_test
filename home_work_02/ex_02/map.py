@@ -191,6 +191,6 @@ class Map:
         else:
             n = rd.randint(0, list_len - 1)
             idx = empty_list[n]
-        x = idx // self.x_size
-        y = idx % self.x_size
+        y = idx // self.x_size
+        x = idx % self.x_size
         return x, y

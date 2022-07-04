@@ -8,7 +8,7 @@ class BasicEngine:
     def get_size(self):
         pass
 
-    def turn(self, x, y) -> CellState:
+    def turn(self, x, y, v) -> CellState:
         pass
 
     def check_win(self, x: int, y: int) -> (str, str, tuple):
@@ -36,8 +36,8 @@ class Engine(BasicEngine):
         self.x_size = x_size
         self.y_size = y_size
         self.win_line = win_line
-        self.activ_player = "user"
-        self.activ_symbol = CellState.X
+        # self.activ_player = "user"
+        # self.activ_symbol = CellState.X
 
     def get_map(self) -> Map:
         return self.Map
@@ -45,21 +45,13 @@ class Engine(BasicEngine):
     def get_size(self) -> (int, int):
         return self.x_size, self.y_size
 
-    def turn(self, x: int, y: int):
+    def turn(self, x: int, y: int, v: str = CellState.X):
         if self.Map.is_cell_empty(x, y):
-            s = self.activ_symbol
-            self.Map.set_cell(x, y, s)
-            self.__change_activ_player()
-            return s
+            # v = self.activ_symbol
+            self.Map.set_cell(x, y, v)
+            # self.__change_activ_player()
+            return v
         return None
-
-    def __change_activ_player(self):
-        if self.activ_player == "user":
-            self.activ_player = "bender"
-            self.activ_symbol = CellState.O
-        else:
-            self.activ_player = "user"
-            self.activ_symbol = CellState.X
 
     def check_win(self, x: int, y: int) -> (str, str, tuple):
         if not self.Map.check_for_empty_cells():
@@ -81,9 +73,17 @@ class Engine(BasicEngine):
 
     def think(self, func_cell_on_click=None) -> (int, int):
         x, y = self.Map.get_random_empty_cell()
+        # Добавим мозгов :), проверим не является ли ход по полученным координатам проигрышем,
+        # если является, еще раз получим случайные координаты, но тут уже проверять не будем
+        # т.е. ошибиться можно один раз за ход
+        lines = self.Map.count_lines(x, y, CellState.O)
+        for line in lines:
+            if line[0] >= self.win_line:
+                x, y = self.Map.get_random_empty_cell()
+                break
         if x is not None:
             if func_cell_on_click is None:
-                self.turn(x, y)
+                self.turn(x, y, CellState.O)
             else:
                 func_cell_on_click(x, y, False)
         return x, y
