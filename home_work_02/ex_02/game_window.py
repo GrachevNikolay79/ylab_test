@@ -10,6 +10,8 @@ class GameWindow:
         self.x_size, self.y_size = self.engine.get_size()
         self.root = tk.Tk()
         self.buttons = []
+        self.fg_x_color = 'DarkOrange3'
+        self.fg_o_color = 'SeaGreen'
         self.__create_widgets()
         self.game_over = False
         self.active = False
@@ -21,8 +23,8 @@ class GameWindow:
 
     def __create_widgets(self):
         top_frame = tk.Frame(master=self.root)
-        tk.Label(master=top_frame, text="(X) Philip J. Fry ", fg='DarkOrange3').pack(side='left')
-        tk.Label(master=top_frame, text="(O) Bender Bending Rodriguez", fg='lightblue').pack(side='right')
+        tk.Label(master=top_frame, text="(X) Philip J. Fry ", fg=self.fg_x_color).pack(side='left')
+        tk.Label(master=top_frame, text="(O) Bender Bending Rodriguez", fg=self.fg_o_color).pack(side='right')
         top_frame.pack()
 
         gf = tk.Frame(master=self.root)
@@ -49,9 +51,9 @@ class GameWindow:
         if res is not None:
             btn = self.buttons[x + y * self.x_size]
             if res == CellState.X:
-                btn[0]['fg'] = 'DarkOrange3'
+                btn[0]['fg'] = self.fg_x_color
             else:
-                btn[0]['fg'] = 'lightblue'
+                btn[0]['fg'] = self.fg_o_color
             btn[1].set(value=res)
 
             win, user, line = self.engine.check_win(x, y)
@@ -80,10 +82,10 @@ class GameWindow:
 
         if user == CellState.O:
             u_name = "Bender Bending Rodriguez"
-            fg = 'lightblue'
+            fg = self.fg_o_color
         else:
             u_name = "Philip J. Fry"
-            fg = 'DarkOrange3'
+            fg = self.fg_x_color
 
         win_text = " {} WIN! \n Congratulations! ".format(u_name)
         tk.Button(slave, text=win_text, command=self.__end_game, fg=fg).pack()
