@@ -69,6 +69,7 @@ def test_ex_01():
 
 
 def test_ex_02():
+    print('\nTEST ex_01:')
     m = Movie('sw', [
         (datetime(2020, 3, 25), datetime(2020, 4, 7)),
         (datetime(2020, 1, 2), datetime(2020, 1, 8)),
