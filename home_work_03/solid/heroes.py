@@ -1,59 +1,64 @@
-class GunMixin:
-    def _fire_a_gun(self):
-        print('PIU PIU')
+from typing import final
+
+from mixin import GunMixin, KickMixin, LasersMixin
 
 
-class LasersMixin:
-    def _incinerate_with_lasers(self):
-        print('Wzzzuuuup!')
-
-
-class KickMixin:
-    def _roundhouse_kick(self):
-        print('Bump')
-
-
-class HeroBasic:
+class BasicHero:
     def __init__(self, name, can_use_ultimate_attack=True):
         self.name = name
         self.can_use_ultimate_attack = can_use_ultimate_attack
 
     @staticmethod
     def find(place):
-        place.get_antagonist()
+        print(place.get_antagonist())
 
+    def _attack(self):
+        pass
+
+    def _ultimate(self):
+        pass
+
+    @final
     def attack(self):
-        pass
+        self._attack()
 
+    @final
     def ultimate(self):
-        pass
+        if self.can_use_ultimate_attack:
+            self._ultimate()
 
-    # Проблема: Герой не должен заниматься оповещениями о своей победе, это задача масс-медиа.
-    # Несоблюден: Принцип единой ответственности.
-    # По SOLID: Вынести оповещение в отдельный класс, занимающийся выводом информации.
-    # Когда возникнут трудности? Добавьте оповещение о победе героя через газеты или через TV (на выбор)
-    # а также попробуйте оповестить планеты (у которых вместа атрибута name:str используется coordinates:List[float]).
-    def create_news(self, place):
-        place_name = getattr(place, 'name', 'place')
-        print(f'{self.name} saved the {place_name}!')
+    def __repr__(self):
+        return self.name
 
 
-class SuperHero(HeroBasic, GunMixin):
+# просто супергерой, порождение темного гения голливуда
+class SuperHero(BasicHero, GunMixin):
 
     def __init__(self, name, can_use_ultimate_attack=True):
         super(SuperHero, self).__init__(name, can_use_ultimate_attack)
 
-    def attack(self):
+    def _attack(self):
         self._fire_a_gun()
 
 
-class Superman(HeroBasic, KickMixin, LasersMixin):
+# супермен в красных труселях поверх лосин
+class Superman(BasicHero, KickMixin, LasersMixin):
 
     def __init__(self):
         super(Superman, self).__init__('Clark Kent', True)
 
-    def attack(self):
+    def _attack(self):
         self._roundhouse_kick()
 
-    def ultimate(self):
+    def _ultimate(self):
         self._incinerate_with_lasers()
+
+
+# Стрелка без белки
+class Strelka(BasicHero, KickMixin):
+
+    def __init__(self):
+        super(Strelka, self).__init__('Strelka', False)
+
+    def _attack(self):
+        self._roundhouse_kick()
