@@ -1,14 +1,15 @@
 class GunMixin:
-    def fire_a_gun(self):
+    def _fire_a_gun(self):
         print('PIU PIU')
 
 
 class LasersMixin:
-    def incinerate_with_lasers(self):
+    def _incinerate_with_lasers(self):
         print('Wzzzuuuup!')
 
+
 class KickMixin:
-    def roundhouse_kick(self):
+    def _roundhouse_kick(self):
         print('Bump')
 
 
@@ -43,7 +44,7 @@ class SuperHero(HeroBasic, GunMixin):
         super(SuperHero, self).__init__(name, can_use_ultimate_attack)
 
     def attack(self):
-        self.fire_a_gun()
+        self._fire_a_gun()
 
 
 class Superman(HeroBasic, KickMixin, LasersMixin):
@@ -52,7 +53,7 @@ class Superman(HeroBasic, KickMixin, LasersMixin):
         super(Superman, self).__init__('Clark Kent', True)
 
     def attack(self):
-        self.roundhouse_kick()
+        self._roundhouse_kick()
 
     def ultimate(self):
-        self.incinerate_with_lasers()
+        self._incinerate_with_lasers()

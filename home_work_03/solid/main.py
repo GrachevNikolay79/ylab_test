@@ -6,8 +6,7 @@ from places import Kostroma, Tokyo
 def save_the_place(hero: SuperHero, place: Union[Kostroma, Tokyo]):
     hero.find(place)
     hero.attack()
-    if hero.can_use_ultimate_attack:
-        hero.ultimate()
+    hero.ultimate()
     hero.create_news(place)
 
 
