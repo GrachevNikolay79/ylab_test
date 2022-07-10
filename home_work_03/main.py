@@ -1,5 +1,6 @@
 from ex_01 import simple_cache, simple_cache_all_arg
 from ex_02 import decorator
+
 '''
 @simple_cache фактически годится только для этой (или такой же функции) 
 '''
@@ -24,9 +25,9 @@ def multiplier_all_arg(number: int, add: int = 1):
     return number * 2 + add
 
 
-@decorator(call_count=10, start_sleep_time=1, factor=2, border_sleep_time=5)
+@decorator(call_count=10, start_sleep_time=1, factor=2, border_sleep_time=10)
 def fn_ex_02(n):
-    return n*2
+    return n * 2
 
 
 if __name__ == '__main__':
@@ -39,7 +40,8 @@ if __name__ == '__main__':
         print("second call: ", i, ' -> ', multiplier(i))
 
     print('\n\n\t@simple_cache_all_arg:')
-    print("по сути одни и те же данные передаются, но кэширование не всегда возможно")
+    print("по сути одни и те же данные передаются, но кэширование не всегда возможно,"
+          " т.к. комбинация параметров разная")
     for i in range(3):
         print("first call (add=5, number=i): ", i, ' -> ', multiplier_all_arg(add=5, number=i))
 
