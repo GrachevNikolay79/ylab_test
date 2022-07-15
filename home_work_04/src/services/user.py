@@ -16,17 +16,17 @@ __all__ = ("UserService", "get_user_service")
 class UserService(ServiceMixin):
     def get_user_list(self) -> dict:
         """Получить список пользователей."""
-        users = self.session.query(User).order_by(User.username).all()
+        users = self.session.query(User).order_by(User.id).all()
         return {"users": [UserModel(**u.dict()) for u in users]}
 
     def get_user_detail(self, user_id: int) -> Optional[dict]:
         """Получить детальную информацию профиля пользователя."""
-        if cached_user := self.cache.get(key=f"{user_id}"):
-            return json.loads(cached_user)
+        # if cached_user := self.cache.get(key=f"{user_id}"):
+        #     return json.loads(cached_user)
 
         user = self.session.query(User).filter(User.id == user_id).first()
-        if user:
-            self.cache.set(key=f"{user.id}", value=user.json())
+        # if user:
+        #     self.cache.set(key=f"{user.id}", value=user.json())
         return user.dict() if user else None
 
     def create_user(self, user: UserCreate) -> dict:
@@ -43,7 +43,7 @@ class UserService(ServiceMixin):
 
 # get_post_service — это провайдер PostService. Синглтон
 @lru_cache()
-def get_post_service(
+def get_user_service(
     cache: AbstractCache = Depends(get_cache),
     session: Session = Depends(get_session),
 ) -> UserService:

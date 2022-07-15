@@ -2,7 +2,7 @@ import redis
 import uvicorn
 from fastapi import FastAPI
 
-from src.api.v1.resources import posts
+from src.api.v1.resources import posts, users
 from src.core import config
 from src.db import cache, redis_cache
 
@@ -20,7 +20,7 @@ app = FastAPI(
 
 @app.get("/")
 def root():
-    return {"service": config.PROJECT_NAME, "version": config.VERSION}
+    return {"service": config.PROJECT_NAME, "version": config.VERSION, "msg": "v2"}
 
 
 @app.on_event("startup")
@@ -41,6 +41,7 @@ def shutdown():
 
 # Подключаем роутеры к серверу
 app.include_router(router=posts.router, prefix="/api/v1/posts")
+app.include_router(router=users.user_router, prefix="/api/v1/users", tags=["users"])
 
 
 if __name__ == "__main__":

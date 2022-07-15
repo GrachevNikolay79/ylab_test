@@ -24,4 +24,4 @@ class UserModel(UserBase):
 
 
 class UserListResponse(BaseModel):
-    posts: list[UserModel] = []
+    users: list[UserModel] = []
