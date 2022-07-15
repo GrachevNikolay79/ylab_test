@@ -14,6 +14,7 @@ class PostBase(BaseModel):
     description: str
 
 
+
 class PostCreate(PostBase):
     ...
 

@@ -7,7 +7,7 @@ __all__ = ("Post",)
 
 
 class Post(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True, nullable=False)
     title: str = Field(nullable=False)
     description: str = Field(nullable=False)
     views: int = Field(default=0)
