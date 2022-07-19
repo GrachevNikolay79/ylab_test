@@ -16,8 +16,10 @@ isort==5.10.1
 Mako==1.2.1
 MarkupSafe==2.1.1
 packaging==21.3
+passlib==1.7.4
 psycopg2-binary==2.9.3
 pydantic==1.9.1
+PyJWT==2.4.0
 pyparsing==3.0.9
 redis==4.3.4
 sniffio==1.2.0

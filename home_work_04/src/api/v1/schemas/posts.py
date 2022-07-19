@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -12,7 +13,7 @@ __all__ = (
 class PostBase(BaseModel):
     title: str
     description: str
-
+    author_id: Optional[str]
 
 
 class PostCreate(PostBase):

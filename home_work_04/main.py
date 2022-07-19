@@ -28,8 +28,9 @@ def startup():
     """Подключаемся к базам при старте сервера"""
     cache.cache = redis_cache.CacheRedis(
         cache_instance=redis.Redis(
-            host=config.REDIS_HOST, port=config.REDIS_PORT, max_connections=10
-        )
+            host=config.REDIS_HOST,
+            port=config.REDIS_PORT,
+            max_connections=10)
     )
 
 
@@ -41,8 +42,7 @@ def shutdown():
 
 # Подключаем роутеры к серверу
 app.include_router(router=posts.router, prefix="/api/v1/posts")
-app.include_router(router=users.user_router, prefix="/api/v1/users", tags=["users"])
-
+app.include_router(router=users.user_router, prefix="/api/v1", tags=["users"])
 
 if __name__ == "__main__":
     # Приложение может запускаться командой

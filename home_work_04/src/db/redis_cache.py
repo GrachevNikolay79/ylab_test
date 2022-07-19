@@ -11,12 +11,23 @@ class CacheRedis(AbstractCache):
         return self.cache.get(name=key)
 
     def set(
-        self,
-        key: str,
-        value: Union[bytes, str],
-        expire: int = config.CACHE_EXPIRE_IN_SECONDS,
+            self,
+            key: str,
+            value: Union[bytes, str],
+            expire: int = config.CACHE_EXPIRE_IN_SECONDS,
     ):
         self.cache.set(name=key, value=value, ex=expire)
 
     def close(self) -> NoReturn:
+        self.cache.bgsave()
         self.cache.close()
+
+    def select(self, num: int):
+        self.cache.select(num)
+
+    def delete(self, key: str):
+        self.cache.delete(key)
+
+    def delete_by_filter(self, key: str):
+        for _key in self.cache.scan_iter(key):
+            self.cache.delete(_key)

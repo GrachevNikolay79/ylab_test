@@ -19,15 +19,27 @@ class AbstractCache(ABC):
 
     @abstractmethod
     def set(
-        self,
-        key: str,
-        value: Union[bytes, str],
-        expire: int = config.CACHE_EXPIRE_IN_SECONDS,
+            self,
+            key: str,
+            value: Union[bytes, str],
+            expire: int = config.CACHE_EXPIRE_IN_SECONDS,
     ):
         pass
 
     @abstractmethod
     def close(self):
+        pass
+
+    @abstractmethod
+    def select(self, num: int):
+        pass
+
+    @abstractmethod
+    def delete(self, key: str):
+        pass
+
+    @abstractmethod
+    def delete_by_filter(self, key: str):
         pass
 
 

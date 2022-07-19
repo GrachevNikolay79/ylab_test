@@ -4,7 +4,6 @@ from src.core import config
 
 __all__ = ("get_session",)
 
-
 engine = create_engine(config.DATABASE_URL, echo=True)
 
 
