@@ -87,6 +87,7 @@ def user_patch(user: UserPatchScheme,
                ) -> dict:
     current_user_id = token['user_id']
     u = user_service.patch_user(user, current_user_id)
+    u['password'] = ''
     u['uuid'] = current_user_id
     ret = token_service.refresh_tokens(old_refresh_token=token, check_token_type=False)
     ret["user"] = u
